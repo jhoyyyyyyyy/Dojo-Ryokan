@@ -1,0 +1,665 @@
+/* ==========================================================================
+   HEADER DOJO RYOKAN — Barra roja de redes + barra principal negra
+   Versión móvil optimizada con menú desplegable institucional a pantalla completa
+   CSS3 nativo, sin dependencias ni frameworks.
+   ========================================================================== */
+
+:root {
+  --rk-red: #ff2a2a;            /* Rojo corporativo */
+  --rk-red-dark: #d81f1f;
+  --rk-black: #111318;          /* Fondo barra principal */
+  --rk-bg-drawer: #0e1117;      /* Fondo sólido del menú móvil */
+  --rk-white: #ffffff;
+  --rk-text-soft: #c9ced8;
+  --rk-gold: #d4af37;
+  --rk-topbar-h: 40px;          /* header.js recalcula en vivo */
+  --rk-header-h: 112px;
+  --rk-max-w: 1320px;
+  --rk-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Compensación de anclajes bajo header fijo */
+html {
+  scroll-padding-top: calc(var(--rk-header-h) + 12px);
+}
+
+/* Bloqueo de scroll cuando el menú móvil está abierto */
+body.rk-nav-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+/* --------------------------------------------------------------------------
+   Contenedor fijo superior
+   -------------------------------------------------------------------------- */
+.rk-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  transition: transform 0.35s var(--rk-ease), box-shadow 0.35s var(--rk-ease);
+}
+
+/* Al hacer scroll en escritorio se oculta la barra roja */
+.rk-header.is-scrolled {
+  transform: translateY(calc(-1 * var(--rk-topbar-h)));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.rk-container {
+  width: 100%;
+  max-width: var(--rk-max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. BARRA SUPERIOR ROJA (redes sociales) — Solo en escritorio
+   -------------------------------------------------------------------------- */
+.rk-topbar {
+  background: var(--rk-red);
+  color: var(--rk-white);
+  min-height: 40px;
+}
+
+.rk-topbar .rk-container {
+  min-height: 40px;
+}
+
+.rk-topbar__text {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.rk-social {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rk-social__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--rk-white);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.rk-social__link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.rk-social__link:hover {
+  background: rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+.rk-social__link:focus-visible {
+  outline: 2px solid var(--rk-white);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   2. BARRA PRINCIPAL NEGRA (logo + menú)
+   -------------------------------------------------------------------------- */
+.rk-mainbar {
+  background: rgba(17, 19, 24, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.rk-mainbar .rk-container {
+  min-height: 72px;
+}
+
+/* Logotipo: emblema circular dorado + nombre en Cinzel */
+.rk-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  color: var(--rk-white);
+  text-decoration: none;
+}
+
+.rk-brand__emblem {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.rk-brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.rk-brand__name {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--rk-white);
+}
+
+.rk-brand__tagline {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--rk-gold);
+  margin-top: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. MENÚ DE NAVEGACIÓN — ESCRITORIO (> 1100px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1101px) {
+  .rk-burger {
+    display: none !important;
+  }
+
+  .rk-drawer {
+    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .rk-drawer__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Ocultar cabecera y pie móvil en escritorio */
+  .rk-drawer__header,
+  .rk-drawer__footer {
+    display: none !important;
+  }
+
+  .rk-nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.6vw, 26px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rk-nav__item {
+    display: inline-flex;
+    align-items: center;
+    border: none !important;
+  }
+
+  .rk-nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 2px;
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--rk-text-soft);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .rk-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--rk-red);
+    transition: width 0.25s var(--rk-ease);
+  }
+
+  .rk-nav__link:hover,
+  .rk-nav__link.active {
+    color: var(--rk-white);
+  }
+
+  .rk-nav__link:hover::after,
+  .rk-nav__link.active::after {
+    width: 100%;
+  }
+
+  /* Chevrons y badges ocultos en escritorio */
+  .rk-nav__arrow,
+  .rk-nav__badge {
+    display: none !important;
+  }
+
+  .rk-nav__ext-icon {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    opacity: 0.75;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .rk-nav__link:hover .rk-nav__ext-icon {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+.rk-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. BOTÓN HAMBURGUESA (BARRA PRINCIPAL MÓVIL)
+   -------------------------------------------------------------------------- */
+.rk-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rk-burger:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.rk-burger:focus-visible {
+  outline: 2px solid var(--rk-red);
+  outline-offset: 2px;
+}
+
+.rk-burger__line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--rk-white);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. VERSIÓN MÓVIL (<= 1100px)
+   - Eliminación total de la barra roja superior en móvil
+   - Menú desplegable a pantalla completa con cabecera interna (Logo + 'X')
+   - Lista con chevrons rojos y badges oficiales
+   - Pie con "ENCUÉNTRANOS EN REDES", iconos circulares y "Dojo Ryokan" centrado
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  :root {
+    --rk-topbar-h: 0px;
+    --rk-header-h: 72px;
+  }
+
+  /* 1. ELIMINACIÓN TOTAL DE LA BARRA ROJA EN MÓVIL (display: none) */
+  .rk-topbar {
+    display: none !important;
+  }
+
+  /* El header móvil permanece fijo sin desplazamiento vertical */
+  .rk-header.is-scrolled {
+    transform: none !important;
+  }
+
+  /* Botón hamburguesa visible */
+  .rk-burger {
+    display: inline-flex;
+  }
+
+  /* 2. MENÚ DESPLEGABLE MÓVIL A PANTALLA COMPLETA */
+  .rk-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    background: #0e1117 !important; /* Fondo sólido institucional oscuro: cero recuadros blancos */
+    z-index: 2000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+
+    /* Estado cerrado: oculto y fuera de la interacción */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.25s var(--rk-ease), transform 0.25s var(--rk-ease), visibility 0.25s;
+  }
+
+  /* Estado abierto */
+  .rk-drawer.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .rk-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Cabecera interna del drawer móvil: Logotipo + Botón 'X' */
+  .rk-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 42, 42, 0.45);
+    background: #0e1117;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .rk-drawer__header .rk-brand__emblem {
+    width: 40px;
+    height: 40px;
+  }
+
+  .rk-drawer__header .rk-brand__name {
+    font-size: 1.25rem;
+  }
+
+  .rk-drawer__header .rk-brand__tagline {
+    font-size: 0.6rem;
+  }
+
+  /* Botón de cierre 'X' (caja cuadrada redondeada en rojo institucional) */
+  .rk-drawer__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: rgba(255, 42, 42, 0.14);
+    border: 1px solid rgba(255, 42, 42, 0.45);
+    border-radius: 8px;
+    color: #ff2a2a;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .rk-drawer__close:hover,
+  .rk-drawer__close:focus-visible {
+    background: rgba(255, 42, 42, 0.25);
+    border-color: #ff2a2a;
+    outline: none;
+    transform: scale(1.04);
+  }
+
+  .rk-drawer__close svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  /* Lista vertical de enlaces */
+  .rk-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 6px 20px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rk-nav__item {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .rk-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 18px 6px;
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #f1f5f9;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .rk-nav__text {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  /* Flecha indicadora roja marcial (>) */
+  .rk-nav__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    line-height: 1;
+    color: #ff2a2a;
+    font-weight: 700;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  /* Etiqueta interna OFICIAL en rojo */
+  .rk-nav__badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255, 42, 42, 0.18);
+    color: #ff5555;
+    border: 1px solid rgba(255, 42, 42, 0.45);
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  /* Indicador dorado de enlace externo */
+  .rk-nav__ext-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: var(--rk-gold, #d4af37);
+  }
+
+  .rk-nav__link:hover,
+  .rk-nav__link:focus-visible {
+    color: #ffffff;
+    padding-left: 12px;
+  }
+
+  .rk-nav__link:hover .rk-nav__arrow {
+    transform: translateX(3px);
+  }
+
+  .rk-nav__link.active {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  /* 3. SECCIÓN INFERIOR DE REDES SOCIALES Y LOGO */
+  .rk-drawer__footer {
+    margin-top: auto;
+    padding: 36px 20px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rk-drawer__social-label {
+    font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8b95a5;
+    font-weight: 700;
+    margin: 0 0 16px;
+    text-align: center;
+  }
+
+  .rk-drawer__social-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .rk-drawer__social-link {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #171b24;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .rk-drawer__social-link svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
+
+  .rk-drawer__social-link:hover {
+    background: var(--rk-red);
+    border-color: var(--rk-red);
+    transform: translateY(-2px);
+  }
+
+  /* Nombre corporativo Dojo Ryokan centrado en dorado */
+  .rk-drawer__brand-bottom {
+    font-family: var(--font-heading, 'Cinzel', serif);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #d4af37;
+    letter-spacing: 1.5px;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. RESPONSIVE COMPLEMENTARIO
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .rk-container {
+    padding: 0 16px;
+  }
+
+  .rk-mainbar .rk-container {
+    min-height: 62px;
+  }
+
+  .rk-brand__emblem {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rk-brand__name {
+    font-size: 1.2rem;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--rk-header-h) + 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .rk-brand__tagline {
+    display: none;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--rk-header-h) + 16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-header,
+  .rk-drawer,
+  .rk-burger__line,
+  .rk-nav__link {
+    transition: none !important;
+  }
+}
